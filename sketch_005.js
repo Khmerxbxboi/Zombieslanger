@@ -9,6 +9,7 @@ let crosshairSize = 50;  // Size of the crosshair (cursor)
 
 let bgImage, introBgImage;
 let zombieImageNormal, zombieImageFast, zombieImageSpecial;
+let hitSound, backgroundMusic;
 
 function preload() {
   // Load images
@@ -17,6 +18,10 @@ function preload() {
   zombieImageNormal = loadImage('zombie_normal.png');  // Replace with actual path
   zombieImageFast = loadImage('zombie_fast.png');  // Replace with actual path
   zombieImageSpecial = loadImage('zombie_boss.png');  // Replace with actual path
+  
+  // Load sounds
+  hitSound = loadSound('zombie-bite.mp3');  // Replace with actual sound file path
+  backgroundMusic = loadSound('background_music.wav');  // Replace with actual sound file path
 }
 
 function setup() {
@@ -25,6 +30,7 @@ function setup() {
   shooterY = height - 30;
 
   setInterval(countdown, 1000);
+  backgroundMusic.loop();  // Start the background music
 }
 
 function draw() {
@@ -116,6 +122,7 @@ function mousePressed() {
       if (d <= crosshairSize / 2) {  // If the distance from the mouse to the zombie is within the crosshair
         score += zombies[i].score;  // Add points based on zombie type
         zombies.splice(i, 1);  // Remove zombie from the array
+        hitSound.play();  // Play hit sound effect
         break;  // Exit the loop once a zombie is hit
       }
     }
@@ -192,8 +199,7 @@ class Zombie {
       this.y = random(height);
     }
 
-
-// zombie size understand
+    // zombie size understand
     this.size = this.type === 'special' ? 65 : (this.type === 'small' ? 35 : 55);
     this.speed = random(2, 4);
     this.score = (this.type === 'special' ? 5 : (this.type === 'fast' ? 2 : 1));  // Fast zombies give 2 points, others give 1 or 5 (special)
