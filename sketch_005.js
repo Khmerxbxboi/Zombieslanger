@@ -2,7 +2,7 @@ let zombies = [];
 let score = 0;
 let shooterX, shooterY;
 let health = 100;
-let gameTimer = 50;
+let gameTimer = 35;
 let gameStarted = false;
 let movementSpeed = 6;
 let crosshairSize = 50;  // Size of the crosshair (cursor)
@@ -31,6 +31,9 @@ function setup() {
 
   setInterval(countdown, 1000);
   backgroundMusic.loop();  // Start the background music
+  
+  // Add initial batch of zombies
+  addZombies();
 }
 
 function draw() {
@@ -87,7 +90,7 @@ function keyPressed() {
   if (!gameStarted) {
     if (keyCode === 32) {  // Spacebar to start the game
       gameStarted = true;
-      gameTimer = 60;  // Reset the timer
+      gameTimer = 35;  // Reset the timer
       score = 0;  // Reset the score
       health = 100;  // Reset health
       zombies = [];  // Clear any zombies
@@ -199,18 +202,24 @@ class Zombie {
       this.y = random(height);
     }
 
-    // zombie size understand
+    // zombie size understanding
     this.size = this.type === 'special' ? 65 : (this.type === 'small' ? 35 : 55);
     this.speed = random(2, 4);
     this.score = (this.type === 'special' ? 5 : (this.type === 'fast' ? 2 : 1));  // Fast zombies give 2 points, others give 1 or 5 (special)
   }
 }
 
-// Add multiple zombies at the start
+// Add more zombies at the start and continuously during the game
 function addZombies() {
-  for (let i = 0; i < 20; i++) {
+  // Increase initial zombie count
+  for (let i = 0; i < 100; i++) {  // Increased number of zombies
     zombies.push(new Zombie());
   }
+
+  // Continue adding zombies every few seconds
+  setInterval(() => {
+    zombies.push(new Zombie());
+  }, 1000);  // Add a zombie every second
 }
 
 // Display the player's health as a life bar
