@@ -25,7 +25,7 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(700, 400);
+  createCanvas(800, 500);
   shooterX = width / 2;
   shooterY = height - 30;
 
@@ -219,7 +219,7 @@ function addZombies() {
   // Continue adding zombies every few seconds
   setInterval(() => {
     zombies.push(new Zombie());
-  }, 1000);  // Add a zombie every second
+  }, 1000);  // Add a zombie every second ( zombies units)
 }
 
 // Display the player's health as a life bar
@@ -231,7 +231,7 @@ function displayHealth() {
   rect(20, height - 40, map(health, 0, 100, 0, 200), 20);  // Health bar foreground
 }
 
-// Game over logic
+// Game over logic1000
 function gameOver() {
   textSize(32);
   fill(255, 100, 150);
